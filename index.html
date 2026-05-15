@@ -1,160 +1,1070 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Descubra Sua Profissão</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  <style>
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-      font-family: Arial, sans-serif;
-    }
+<title>Futuro da Programação</title>
 
-    body{
-      background: linear-gradient(135deg,#0f172a,#1e293b);
-      min-height:100vh;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      padding:20px;
-      color:white;
-    }
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
 
-    .chat-container{
-      width:100%;
-      max-width:700px;
-      background:#111827;
-      border-radius:20px;
-      overflow:hidden;
-      box-shadow:0 0 30px rgba(0,0,0,0.4);
-    }
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
-    .topo{
-      background:#16a34a;
-      padding:20px;
-      text-align:center;
-    }
+<style>
 
-    .topo h1{
-      font-size:28px;
-    }
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
 
-    .topo p{
-      margin-top:8px;
-      opacity:0.9;
-    }
+html{
+  scroll-behavior:smooth;
+}
 
-    .chat{
-      padding:25px;
-      min-height:450px;
-    }
+body{
+  background:#050a18;
+  font-family:'Rajdhani',sans-serif;
+  color:white;
+  overflow-x:hidden;
+}
 
-    .pergunta{
-      font-size:22px;
-      margin-bottom:25px;
-      line-height:1.4;
-    }
+.app-root{
+  width:100%;
+  min-height:100vh;
+  position:relative;
+}
 
-    .opcoes{
-      display:flex;
-      flex-direction:column;
-      gap:15px;
-    }
+/* BACKGROUND */
 
-    button{
-      background:#1f2937;
-      color:white;
-      border:none;
-      padding:16px;
-      border-radius:12px;
-      cursor:pointer;
-      transition:0.3s;
-      font-size:16px;
-      text-align:left;
-    }
+.grid-bg{
+  position:fixed;
+  inset:0;
+  background-image:
+    linear-gradient(rgba(0,255,136,0.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,255,136,0.03) 1px,transparent 1px);
+  background-size:60px 60px;
+  pointer-events:none;
+  z-index:0;
+}
 
-    button:hover{
-      background:#16a34a;
-      transform:translateY(-2px);
-    }
+.particle{
+  position:fixed;
+  border-radius:50%;
+  pointer-events:none;
+  animation:float linear infinite;
+}
 
-    .resultado{
-      text-align:center;
-      animation: aparecer 0.5s ease;
-    }
+@keyframes float{
+  0%{
+    transform:translateY(0) scale(1);
+    opacity:0;
+  }
 
-    .resultado h2{
-      font-size:32px;
-      margin-bottom:15px;
-      color:#22c55e;
-    }
+  10%{
+    opacity:1;
+  }
 
-    .resultado p{
-      font-size:18px;
-      line-height:1.6;
-      margin-bottom:20px;
-    }
+  90%{
+    opacity:1;
+  }
 
-    .profissoes{
-      background:#1f2937;
-      padding:18px;
-      border-radius:12px;
-      margin-top:15px;
-    }
+  100%{
+    transform:translateY(-100vh) scale(0.5);
+    opacity:0;
+  }
+}
 
-    .reiniciar{
-      margin-top:25px;
-      background:#22c55e;
-      text-align:center;
-    }
+/* GLOW */
 
-    @keyframes aparecer{
-      from{
-        opacity:0;
-        transform:translateY(20px);
-      }
-      to{
-        opacity:1;
-        transform:translateY(0);
-      }
-    }
+.glow-green{
+  text-shadow:
+    0 0 20px rgba(0,255,136,0.5),
+    0 0 40px rgba(0,255,136,0.2);
+}
 
-    .progresso{
-      width:100%;
-      height:8px;
-      background:#374151;
-    }
+.glow-blue{
+  text-shadow:
+    0 0 20px rgba(0,136,255,0.5),
+    0 0 40px rgba(0,136,255,0.2);
+}
 
-    .barra{
-      height:100%;
-      width:0%;
-      background:#22c55e;
-      transition:0.3s;
-    }
-  </style>
+/* SECTION */
+
+.section{
+  min-height:100vh;
+  padding:4rem 2rem;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  z-index:1;
+  border-bottom:1px solid rgba(0,255,136,0.05);
+}
+
+/* CARDS */
+
+.neon-border{
+  border:1px solid rgba(0,255,136,0.2);
+  background:rgba(0,255,136,0.03);
+}
+
+.neon-border-blue{
+  border:1px solid rgba(0,136,255,0.2);
+  background:rgba(0,136,255,0.03);
+}
+
+.info-card{
+  transition:0.3s;
+}
+
+.info-card:hover{
+  transform:translateY(-5px);
+}
+
+/* CODE */
+
+.code-rain{
+  position:absolute;
+  font-family:'Space Mono',monospace;
+  font-size:12px;
+  color:rgba(0,255,136,0.08);
+  white-space:pre;
+  line-height:1.4;
+  pointer-events:none;
+}
+
+/* PROGRESS */
+
+.scroll-progress{
+  position:fixed;
+  top:0;
+  left:0;
+  height:3px;
+  width:0%;
+  background:linear-gradient(90deg,#00ff88,#0088ff);
+  z-index:999;
+}
+
+/* NAV */
+
+.nav-dot{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  border:none;
+  background:rgba(255,255,255,0.2);
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.nav-dot.active{
+  background:#00ff88;
+  transform:scale(1.2);
+}
+
+/* SALARY */
+
+.salary-bar{
+  width:0;
+  transition:1.2s;
+}
+
+.salary-bar.animate{
+  width:var(--target-width);
+}
+
+/* ================= QUIZ ================= */
+
+.quiz-wrapper{
+  width:100%;
+  max-width:850px;
+}
+
+.chat-container{
+  width:100%;
+  background:#111827;
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:0 0 30px rgba(0,0,0,0.4);
+  border:1px solid rgba(0,255,136,0.15);
+}
+
+.topo{
+  background:linear-gradient(135deg,#00ff88,#0088ff);
+  padding:30px;
+  text-align:center;
+}
+
+.topo h1{
+  font-family:'Orbitron',sans-serif;
+  font-size:32px;
+}
+
+.topo p{
+  margin-top:10px;
+  color:rgba(255,255,255,0.85);
+}
+
+.progresso{
+  width:100%;
+  height:8px;
+  background:#1f2937;
+}
+
+.barra{
+  height:100%;
+  width:0%;
+  background:#22c55e;
+  transition:0.3s;
+}
+
+.chat{
+  padding:35px;
+  min-height:450px;
+}
+
+.pergunta{
+  font-size:28px;
+  margin-bottom:30px;
+  line-height:1.4;
+  font-weight:700;
+}
+
+.opcoes{
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+}
+
+.quiz-btn{
+  background:#1f2937;
+  color:white;
+  border:none;
+  padding:18px;
+  border-radius:14px;
+  cursor:pointer;
+  transition:0.3s;
+  font-size:18px;
+  text-align:left;
+}
+
+.quiz-btn:hover{
+  background:#16a34a;
+  transform:translateY(-2px);
+}
+
+.resultado{
+  text-align:center;
+  animation:aparecer 0.5s ease;
+}
+
+.resultado h2{
+  font-size:38px;
+  margin-bottom:15px;
+  color:#22c55e;
+  font-family:'Orbitron',sans-serif;
+}
+
+.resultado p{
+  font-size:20px;
+  line-height:1.6;
+  margin-bottom:20px;
+}
+
+.profissoes{
+  background:#1f2937;
+  padding:20px;
+  border-radius:14px;
+  margin-top:15px;
+  font-size:18px;
+}
+
+.reiniciar{
+  margin-top:25px;
+  background:#22c55e;
+  color:white;
+  border:none;
+  padding:16px 28px;
+  border-radius:12px;
+  cursor:pointer;
+  font-size:18px;
+  transition:0.3s;
+}
+
+.reiniciar:hover{
+  transform:scale(1.03);
+}
+
+@keyframes aparecer{
+  from{
+    opacity:0;
+    transform:translateY(20px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+@media(max-width:768px){
+
+  .section{
+    padding:3rem 1rem;
+  }
+
+  .chat{
+    padding:25px;
+  }
+
+  .pergunta{
+    font-size:22px;
+  }
+
+  .quiz-btn{
+    font-size:16px;
+  }
+
+}
+
+</style>
 </head>
+
 <body>
 
-  <div class="chat-container">
+<div class="app-root">
 
-    <div class="topo">
-      <h1>Descubra Sua Profissão</h1>
-      <p>Responda o quiz e descubra qual área combina com você!</p>
-    </div>
+<div class="grid-bg"></div>
 
-    <div class="progresso">
-      <div class="barra" id="barra"></div>
-    </div>
+<div id="particles"></div>
 
-    <div class="chat" id="chat">
-    </div>
+<div class="scroll-progress" id="scrollProgress"></div>
 
-  </div>
+<!-- NAV -->
+
+<nav style="
+position:fixed;
+bottom:1.5rem;
+left:50%;
+transform:translateX(-50%);
+z-index:50;
+display:flex;
+align-items:center;
+gap:0.75rem;
+padding:0.75rem 1.5rem;
+background:rgba(5,10,24,0.9);
+border:1px solid rgba(0,255,136,0.15);
+border-radius:9999px;
+backdrop-filter:blur(10px);
+">
+
+<button onclick="sections[currentSection-1]?.scrollIntoView({behavior:'smooth'})"
+style="color:rgba(0,255,136,0.6);background:none;border:none;cursor:pointer;">
+<i data-lucide="chevron-up"></i>
+</button>
+
+<div id="navDots" style="display:flex;gap:0.5rem"></div>
+
+<button onclick="sections[currentSection+1]?.scrollIntoView({behavior:'smooth'})"
+style="color:rgba(0,255,136,0.6);background:none;border:none;cursor:pointer;">
+<i data-lucide="chevron-down"></i>
+</button>
+
+</nav>
+
+<!-- CONTADOR -->
+
+<div style="
+position:fixed;
+top:1rem;
+right:1.5rem;
+z-index:50;
+font-family:'Space Mono',monospace;
+font-size:0.8rem;
+color:rgba(0,255,136,0.5);
+">
+<span id="slideCounter">01 / 07</span>
+</div>
+
+<!-- ================= CAPA ================= -->
+
+<section class="section">
+
+<div class="code-rain" style="top:5%;left:3%">
+const future = await
+Technology.create({
+innovation: true,
+ai: 'enabled',
+passion: Infinity
+});
+</div>
+
+<div style="
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+text-align:center;
+max-width:1200px;
+">
+
+<div style="position:relative;margin-bottom:2rem">
+
+<svg width="120" height="120" viewBox="0 0 120 120" style="opacity:0.3">
+
+<polygon points="60,5 110,30 110,90 60,115 10,90 10,30"
+fill="none"
+stroke="#00ff88"
+stroke-width="1">
+
+<animateTransform
+attributeName="transform"
+type="rotate"
+values="0 60 60;360 60 60"
+dur="20s"
+repeatCount="indefinite"/>
+
+</polygon>
+
+</svg>
+
+<div style="
+position:absolute;
+inset:0;
+display:flex;
+align-items:center;
+justify-content:center;
+">
+<i data-lucide="terminal" style="width:40px;height:40px;color:#00ff88"></i>
+</div>
+
+</div>
+
+<div style="
+font-family:'Space Mono',monospace;
+font-size:0.7rem;
+color:rgba(0,255,136,0.4);
+letter-spacing:0.3em;
+margin-bottom:1rem;
+">
+FEIRA ACADÊMICA 2026
+</div>
+
+<h1 class="glow-green"
+style="
+font-family:'Orbitron',sans-serif;
+font-size:clamp(2.5rem,6vw,5rem);
+font-weight:900;
+line-height:1.1;
+margin-bottom:1rem;
+">
+
+Futuro da<br>
+<span style="color:#00ff88">Programação</span>
+
+</h1>
+
+<p style="
+font-size:clamp(1rem,2.5vw,1.5rem);
+color:rgba(255,255,255,0.5);
+max-width:600px;
+margin-bottom:3rem;
+">
+
+Explore as áreas que movem o mundo digital
+
+</p>
+
+</div>
+
+</section>
+
+<!-- ================= CARREIRA ================= -->
+
+<section class="section">
+
+<div style="max-width:1200px;width:100%;">
+
+<div style="text-align:center;margin-bottom:2rem">
+
+<h2 class="glow-green"
+style="
+font-family:'Orbitron',sans-serif;
+font-size:clamp(1.8rem,4vw,2.8rem);
+margin-bottom:1rem;
+">
+Carreira em Y
+</h2>
+
+<p style="color:rgba(255,255,255,0.5);font-size:1.1rem;">
+Dois caminhos para crescer
+</p>
+
+</div>
+
+<div style="
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+gap:2rem;
+">
+
+<div class="neon-border info-card"
+style="padding:2rem;border-radius:12px;">
+
+<h3 style="
+color:#00ff88;
+font-family:'Orbitron';
+margin-bottom:1rem;
+">
+Especialista Técnico
+</h3>
+
+<p style="color:rgba(255,255,255,0.6);line-height:1.7;">
+Você pode crescer dominando tecnologias específicas,
+IA, segurança, arquitetura e desenvolvimento.
+</p>
+
+</div>
+
+<div class="neon-border-blue info-card"
+style="padding:2rem;border-radius:12px;">
+
+<h3 style="
+color:#0088ff;
+font-family:'Orbitron';
+margin-bottom:1rem;
+">
+Gestor de Pessoas
+</h3>
+
+<p style="color:rgba(255,255,255,0.6);line-height:1.7;">
+Também é possível crescer liderando equipes,
+gerenciando projetos e coordenando times.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ================= CURIOSIDADES ================= -->
+
+<section class="section">
+
+<div style="max-width:1200px;width:100%;">
+
+<div style="text-align:center;margin-bottom:2rem">
+
+<h2 class="glow-blue"
+style="
+font-family:'Orbitron',sans-serif;
+font-size:clamp(1.8rem,4vw,2.8rem);
+margin-bottom:1rem;
+">
+Curiosidades do Mundo Tech
+</h2>
+
+</div>
+
+<div style="
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:1.5rem;
+">
+
+<div class="neon-border info-card"
+style="padding:1.5rem;border-radius:12px;">
+
+<h3 style="color:#00ff88;margin-bottom:1rem;">
+Front-end vs Back-end
+</h3>
+
+<p style="color:rgba(255,255,255,0.6);line-height:1.8;">
+Front-end cria a interface visual.<br><br>
+Back-end cuida da lógica, servidores e banco de dados.
+</p>
+
+</div>
+
+<div class="neon-border-blue info-card"
+style="padding:1.5rem;border-radius:12px;">
+
+<h3 style="color:#0088ff;margin-bottom:1rem;">
+Mercado Mobile
+</h3>
+
+<p style="color:rgba(255,255,255,0.6);line-height:1.8;">
+Aplicativos cresceram muito nos últimos anos e a demanda
+por desenvolvedores continua aumentando.
+</p>
+
+</div>
+
+<div class="neon-border info-card"
+style="padding:1.5rem;border-radius:12px;">
+
+<h3 style="color:#00ff88;margin-bottom:1rem;">
+Cientistas de Dados
+</h3>
+
+<p style="color:rgba(255,255,255,0.6);line-height:1.8;">
+Profissionais que analisam dados e ajudam empresas a tomar decisões.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ================= SALÁRIOS ================= -->
+
+<section class="section" id="salarySection">
+
+<div style="max-width:900px;width:100%;">
+
+<div style="text-align:center;margin-bottom:2rem">
+
+<h2 class="glow-green"
+style="
+font-family:'Orbitron',sans-serif;
+font-size:clamp(1.8rem,4vw,2.8rem);
+margin-bottom:1rem;
+">
+Quanto ganha um programador?
+</h2>
+
+</div>
+
+<div style="display:flex;flex-direction:column;gap:2rem;">
+
+<div>
+
+<div style="
+display:flex;
+justify-content:space-between;
+margin-bottom:0.5rem;
+">
+<span>Júnior</span>
+<span style="color:#00ff88;">R$ 3.000 – R$ 5.000</span>
+</div>
+
+<div style="
+height:28px;
+background:rgba(0,255,136,0.06);
+border-radius:4px;
+overflow:hidden;
+">
+
+<div class="salary-bar"
+style="
+--target-width:33%;
+height:100%;
+background:linear-gradient(90deg,#00ff88,#0088ff);
+">
+</div>
+
+</div>
+
+</div>
+
+<div>
+
+<div style="
+display:flex;
+justify-content:space-between;
+margin-bottom:0.5rem;
+">
+<span>Pleno</span>
+<span style="color:#0088ff;">R$ 6.000 – R$ 10.000</span>
+</div>
+
+<div style="
+height:28px;
+background:rgba(0,136,255,0.06);
+border-radius:4px;
+overflow:hidden;
+">
+
+<div class="salary-bar"
+style="
+--target-width:60%;
+height:100%;
+background:linear-gradient(90deg,#0088ff,#00ff88);
+">
+</div>
+
+</div>
+
+</div>
+
+<div>
+
+<div style="
+display:flex;
+justify-content:space-between;
+margin-bottom:0.5rem;
+">
+<span>Sênior</span>
+<span style="color:#00ff88;">R$ 15.000+</span>
+</div>
+
+<div style="
+height:30px;
+background:rgba(0,255,136,0.06);
+border-radius:4px;
+overflow:hidden;
+">
+
+<div class="salary-bar"
+style="
+--target-width:100%;
+height:100%;
+background:linear-gradient(90deg,#00ff88,#0088ff);
+">
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ================= TIMELINE ================= -->
+
+<section class="section">
+
+<div style="max-width:1200px;width:100%;">
+
+<div style="text-align:center;margin-bottom:2rem">
+
+<h2 class="glow-blue"
+style="
+font-family:'Orbitron',sans-serif;
+font-size:clamp(1.8rem,4vw,2.8rem);
+">
+História da Programação
+</h2>
+
+</div>
+
+<div style="
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:1.5rem;
+">
+
+<div class="neon-border info-card"
+style="padding:1.5rem;border-radius:12px;text-align:center;">
+<h3 style="color:#00ff88;">1843</h3>
+<p style="margin-top:1rem;color:rgba(255,255,255,0.6);">
+Ada Lovelace cria o primeiro algoritmo.
+</p>
+</div>
+
+<div class="neon-border-blue info-card"
+style="padding:1.5rem;border-radius:12px;text-align:center;">
+<h3 style="color:#0088ff;">1947</h3>
+<p style="margin-top:1rem;color:rgba(255,255,255,0.6);">
+Surge o termo “bug”.
+</p>
+</div>
+
+<div class="neon-border info-card"
+style="padding:1.5rem;border-radius:12px;text-align:center;">
+<h3 style="color:#00ff88;">1990</h3>
+<p style="margin-top:1rem;color:rgba(255,255,255,0.6);">
+Expansão da internet.
+</p>
+</div>
+
+<div class="neon-border-blue info-card"
+style="padding:1.5rem;border-radius:12px;text-align:center;">
+<h3 style="color:#0088ff;">Hoje</h3>
+<p style="margin-top:1rem;color:rgba(255,255,255,0.6);">
+Era da Inteligência Artificial.
+</p>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ================= IA ================= -->
+
+<section class="section">
+
+<div style="max-width:1200px;width:100%;">
+
+<div style="text-align:center;margin-bottom:2rem;">
+
+<h2 class="glow-green"
+style="
+font-family:'Orbitron',sans-serif;
+font-size:clamp(1.8rem,4vw,2.8rem);
+margin-bottom:1rem;
+">
+Programação na Era da IA
+</h2>
+
+</div>
+
+<div style="
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:2rem;
+">
+
+<div class="neon-border info-card"
+style="padding:1.5rem;border-radius:12px;">
+
+<h3 style="color:#00ff88;margin-bottom:1rem;">
+A IA ajuda em:
+</h3>
+
+<p style="line-height:2;color:rgba(255,255,255,0.6);">
+▸ Geração de código<br>
+▸ Correção de erros<br>
+▸ Documentação<br>
+▸ Automação<br>
+▸ Testes
+</p>
+
+</div>
+
+<div class="neon-border-blue info-card"
+style="padding:1.5rem;border-radius:12px;">
+
+<h3 style="color:#0088ff;margin-bottom:1rem;">
+IA não substitui:
+</h3>
+
+<p style="line-height:2;color:rgba(255,255,255,0.6);">
+✨ Criatividade<br>
+🧠 Lógica Complexa<br>
+🎯 Resolução de Problemas
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ================= QUIZ ================= -->
+
+<section class="section">
+
+<div class="quiz-wrapper">
+
+<div style="text-align:center;margin-bottom:2rem;">
+
+<h2 class="glow-green"
+style="
+font-family:'Orbitron',sans-serif;
+font-size:clamp(1.8rem,4vw,2.8rem);
+margin-bottom:1rem;
+">
+Quiz de Profissões
+</h2>
+
+<p style="color:rgba(255,255,255,0.5);font-size:1.1rem;">
+Descubra qual área mais combina com você 🚀
+</p>
+
+</div>
+
+<div class="chat-container">
+
+<div class="topo">
+<h1>Descubra Sua Profissão</h1>
+<p>Responda o quiz e descubra qual área combina com você!</p>
+</div>
+
+<div class="progresso">
+<div class="barra" id="barra"></div>
+</div>
+
+<div class="chat" id="chat"></div>
+
+</div>
+
+</div>
+
+</section>
+
+</div>
 
 <script>
+
+/* ================= PARTÍCULAS ================= */
+
+const particlesEl = document.getElementById("particles");
+
+for(let i = 0; i < 25; i++){
+
+  const p = document.createElement("div");
+
+  p.className = "particle";
+
+  const size = Math.random() * 3 + 1;
+
+  p.style.cssText = `
+    width:${size}px;
+    height:${size}px;
+    left:${Math.random()*100}%;
+    bottom:-10px;
+    background:${Math.random()>0.5 ? '#00ff88' : '#0088ff'};
+    animation-duration:${Math.random()*10+8}s;
+    animation-delay:${Math.random()*5}s;
+    opacity:0;
+  `;
+
+  particlesEl.appendChild(p);
+}
+
+/* ================= SCROLL ================= */
+
+const sections = document.querySelectorAll(".section");
+
+let currentSection = 0;
+
+const totalSections = sections.length;
+
+function updateScrollProgress(){
+
+  const scrollTop = window.scrollY;
+
+  const docHeight =
+    document.documentElement.scrollHeight - window.innerHeight;
+
+  const scrollPercent =
+    (scrollTop / docHeight) * 100;
+
+  document.getElementById("scrollProgress").style.width =
+    scrollPercent + "%";
+
+  let active = 0;
+
+  sections.forEach((section,index)=>{
+
+    const rect = section.getBoundingClientRect();
+
+    if(rect.top <= window.innerHeight / 2){
+      active = index;
+    }
+
+  });
+
+  currentSection = active;
+
+  updateNav();
+}
+
+function updateNav(){
+
+  document.querySelectorAll(".nav-dot").forEach((dot,i)=>{
+
+    dot.classList.toggle("active",i===currentSection);
+
+  });
+
+  document.getElementById("slideCounter").textContent =
+    String(currentSection + 1).padStart(2,"0")
+    + " / " +
+    String(totalSections).padStart(2,"0");
+}
+
+/* NAV DOTS */
+
+const dotsContainer = document.getElementById("navDots");
+
+for(let i = 0; i < totalSections; i++){
+
+  const dot = document.createElement("button");
+
+  dot.className =
+    "nav-dot" + (i===0 ? " active" : "");
+
+  dot.onclick = ()=>{
+
+    sections[i].scrollIntoView({
+      behavior:"smooth"
+    });
+
+  };
+
+  dotsContainer.appendChild(dot);
+}
+
+window.addEventListener("scroll",updateScrollProgress);
+
+window.addEventListener("load",updateScrollProgress);
+
+/* KEYBOARD */
+
+document.addEventListener("keydown",e=>{
+
+  if(e.key === "ArrowDown" || e.key === "ArrowRight"){
+
+    if(currentSection < totalSections - 1){
+
+      sections[currentSection + 1]
+      .scrollIntoView({behavior:"smooth"});
+
+    }
+
+  }
+
+  if(e.key === "ArrowUp" || e.key === "ArrowLeft"){
+
+    if(currentSection > 0){
+
+      sections[currentSection - 1]
+      .scrollIntoView({behavior:"smooth"});
+
+    }
+
+  }
+
+});
+
+/* SALARY ANIMATION */
+
+const observer = new IntersectionObserver((entries)=>{
+
+  entries.forEach(entry=>{
+
+    if(entry.isIntersecting){
+
+      entry.target
+      .querySelectorAll(".salary-bar")
+      .forEach(bar=>bar.classList.add("animate"));
+
+    }
+
+  });
+
+},{threshold:0.3});
+
+observer.observe(document.getElementById("salarySection"));
+
+/* ================= QUIZ ================= */
 
 const perguntas = [
   {
@@ -257,68 +1167,85 @@ const perguntas = [
     ]
   }
 ];
-
 const resultados = {
-  tecnologia: {
-    titulo: "Tecnologia",
-    texto: "Você gosta de inovação, lógica e tecnologia!",
-    profissoes: "Programador • Desenvolvedor de Jogos • Cientista de Dados • Analista de Sistemas"
-  },
 
-  saude: {
-    titulo: "Saúde",
-    texto: "Você demonstra interesse em cuidar das pessoas e ajudar a sociedade.",
-    profissoes: "Médico • Enfermeiro • Psicólogo • Fisioterapeuta"
-  },
+tecnologia:{
+titulo:"Tecnologia",
+texto:"Você gosta de inovação, lógica e tecnologia!",
+profissoes:"Programador • Desenvolvedor de Jogos • Cientista de Dados • Analista de Sistemas"
+},
 
-  artes: {
-    titulo: "Artes & Design",
-    texto: "Sua criatividade é um grande destaque!",
-    profissoes: "Designer • Editor de Vídeo • Fotógrafo • Publicitário"
-  },
+saude:{
+titulo:"Saúde",
+texto:"Você demonstra interesse em cuidar das pessoas e ajudar a sociedade.",
+profissoes:"Médico • Enfermeiro • Psicólogo • Fisioterapeuta"
+},
 
-  engenharia: {
-    titulo: "Engenharia",
-    texto: "Você gosta de resolver problemas e criar soluções.",
-    profissoes: "Engenheiro Civil • Engenheiro Mecânico • Arquiteto • Engenheiro de Software"
-  },
+artes:{
+titulo:"Artes & Design",
+texto:"Sua criatividade é um grande destaque!",
+profissoes:"Designer • Editor de Vídeo • Fotógrafo • Publicitário"
+},
 
-  negocios: {
-    titulo: "Negócios & Administração",
-    texto: "Você possui perfil de liderança e comunicação.",
-    profissoes: "Administrador • Empresário • Profissional de Marketing • Gestor Financeiro"
-  }
+engenharia:{
+titulo:"Engenharia",
+texto:"Você gosta de resolver problemas e criar soluções.",
+profissoes:"Engenheiro Civil • Engenheiro Mecânico • Arquiteto • Engenheiro de Software"
+},
+
+negocios:{
+titulo:"Negócios & Administração",
+texto:"Você possui perfil de liderança e comunicação.",
+profissoes:"Administrador • Empresário • Marketing • Gestor Financeiro"
+}
+
 };
 
 let perguntaAtual = 0;
 
 let pontos = {
-  tecnologia: 0,
-  saude: 0,
-  artes: 0,
-  engenharia: 0,
-  negocios: 0
+
+tecnologia:0,
+saude:0,
+artes:0,
+engenharia:0,
+negocios:0
+
 };
 
 const chat = document.getElementById("chat");
+
 const barra = document.getElementById("barra");
 
 function mostrarPergunta(){
 
   let p = perguntas[perguntaAtual];
 
-  barra.style.width = ((perguntaAtual) / perguntas.length) * 100 + "%";
+  barra.style.width =
+    ((perguntaAtual) / perguntas.length) * 100 + "%";
 
   chat.innerHTML = `
-    <div class="pergunta">${p.pergunta}</div>
+
+    <div class="pergunta">
+      ${p.pergunta}
+    </div>
 
     <div class="opcoes">
+
       ${p.opcoes.map(opcao => `
-        <button onclick="responder('${opcao.area}')">
+
+        <button
+        class="quiz-btn"
+        onclick="responder('${opcao.area}')">
+
           ${opcao.texto}
+
         </button>
+
       `).join("")}
+
     </div>
+
   `;
 }
 
@@ -329,10 +1256,15 @@ function responder(area){
   perguntaAtual++;
 
   if(perguntaAtual < perguntas.length){
+
     mostrarPergunta();
+
   }else{
+
     mostrarResultado();
+
   }
+
 }
 
 function mostrarResultado(){
@@ -340,18 +1272,25 @@ function mostrarResultado(){
   barra.style.width = "100%";
 
   let maior = "";
+
   let maiorPonto = 0;
 
   for(let area in pontos){
+
     if(pontos[area] > maiorPonto){
+
       maiorPonto = pontos[area];
+
       maior = area;
+
     }
+
   }
 
   let resultado = resultados[maior];
 
   chat.innerHTML = `
+
     <div class="resultado">
 
       <h2>${resultado.titulo}</h2>
@@ -359,15 +1298,25 @@ function mostrarResultado(){
       <p>${resultado.texto}</p>
 
       <div class="profissoes">
-        <strong>Profissões indicadas:</strong><br><br>
+
+        <strong>Profissões indicadas:</strong>
+
+        <br><br>
+
         ${resultado.profissoes}
+
       </div>
 
-      <button class="reiniciar" onclick="reiniciarQuiz()">
-        Refazer Quiz
+      <button
+      class="reiniciar"
+      onclick="reiniciarQuiz()">
+
+      Refazer Quiz
+
       </button>
 
     </div>
+
   `;
 }
 
@@ -376,17 +1325,21 @@ function reiniciarQuiz(){
   perguntaAtual = 0;
 
   pontos = {
-    tecnologia: 0,
-    saude: 0,
-    artes: 0,
-    engenharia: 0,
-    negocios: 0
+
+    tecnologia:0,
+    saude:0,
+    artes:0,
+    engenharia:0,
+    negocios:0
+
   };
 
   mostrarPergunta();
 }
 
 mostrarPergunta();
+
+lucide.createIcons();
 
 </script>
 
